@@ -4,11 +4,7 @@
 
 https://kmooc.udemy.com/course/best-react/learn/lecture/28517031#overview
 
-
-
 https://github.com/pajiyeee/react-complete-guide/assets/124162355/a69f2a3a-fb29-432f-bb29-2e6d0e391292
-
-
 
 ## **Section 5 렌더링 리스트 및 조건부 Content**
 
@@ -137,3 +133,73 @@ const Expenses = props => {
 
 export default Expenses;
 ```
+
+### 74. 조건부 내용 출력
+
+if/for x
+
+물음표 조건부 연산자
+
+```jsx
+{
+  filteredExpenses.length === 0 ? (
+    <p>No data</p>
+  ) : (
+    filteredExpenses.map(expense => (
+      <ExpenseItem
+        key={expense.id}
+        title={expense.title}
+        amount={expense.amount}
+        date={expense.date}
+      />
+    ))
+  );
+}
+```
+
+{조건 ? (true) : (false)}
+
+길어지면 더 짧게 구문을 써줄 수 있는 표현식
+
+&& 연산자
+
+```jsx
+{
+  filteredExpenses.length === 0 && <p>No data</p>;
+}
+{
+  filteredExpenses.length > 0 &&
+    filteredExpenses.map(expense => <ExpenseItem />);
+}
+```
+
+let 을 사용하여 변수에 값을 저장하면
+
+return문 밖으로 빼서 if 문을 쓸 수 있게 한다.
+
+```
+let expenseContents = <p>No data</p>;
+  if (filteredExpenses.length > 0) {
+    expenseContents = filteredExpenses.map(expense => (
+      <ExpenseItem
+        key={expense.id}
+        title={expense.title}
+        amount={expense.amount}
+        date={expense.date}
+      />
+    ));
+  }
+  return (
+    <div>
+      <Card className="expenses">
+        <ExpensesFilter
+          selected={filterYear}
+          onChangeFilter={filterChanageHandler}
+        />
+        {expenseContents}
+      </Card>
+    </div>
+  );
+```
+
+깔끔하게 JSX코드를 쓸 수 있음
