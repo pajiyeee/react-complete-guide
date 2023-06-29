@@ -1,70 +1,133 @@
-# Getting Started with Create React App
+# React | React 완벽가이드 with Redux, Next, TypeScript | Section5~6
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**📌유데미 강의**
 
-## Available Scripts
+https://kmooc.udemy.com/course/best-react/learn/lecture/28517031#overview
 
-In the project directory, you can run:
+## **Section 5 렌더링 리스트 및 조건부 Content**
 
-### `npm start`
+### 69. 데이터 렌더링 목록
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+map()
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+목록을 추가하는데는 이전 최신 상태의 배열을 가져와서 상태업데이트
 
-### `npm test`
+```jsx
+const [expenses, setExpenses] = useState(DUMMY_EXPENSES))
+const addExpenseHandler = expense ⇒ {setExpenses((prevExpenses) ⇒ [expense, …prevExpenses]}
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 70~71. key props
 
-### `npm run build`
+### key props
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+리액트는 데이터목록을 업데이트할 때 특별한 개념을 가진다.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+→ 리액트가 발생할 수 있는 어떤 성능 손실이나 버그 없이 효과적으로 목록들을 업데이트하고 렌더링할 수 있도록 보장하기 위해 존재
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**키가 없을 시 일어나는 문제**
 
-### `npm run eject`
+키가 없다면 목록을 추가할 때 마지막 아이템으로 렌더링하고 모든 아이템을 업데이트해서 컨텐츠를 교체
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+→성능적으로 문제있다.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+왜냐하면
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1)모든 목록을 체크해서 업데이트해야 하고, 버그까지도 만들 수 있음
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+2)추가한 새아이템이 특정 state를 갖고 있었다면 새 아이템은 이전 아이템을 덮어쓸 것 →있었을 수도 있는 어떤 상태의 변화는 사라질 것
 
-## Learn More
+3)잠재적인 성능 이외에도 버그가 발생할 수 있다.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 리엑트는 왜 그렇게 작동할까?
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+다른 방법이 없기 때문
 
-### Code Splitting
+리엑트는 각각의 아이템들이 모두 비슷해 보이기 때문에
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+배열의 길이를 체크하고 이미 렌더링된 아이템의 수만 확인한다.
 
-### Analyzing the Bundle Size
+그래서 새로운 아이템이 어느 위치에 추가되어야 하는지 모른다.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+새로운 아이템이 어디에 추가될지 알려줘야 하기에 key
 
-### Making a Progressive Web App
+어떤 원시값도 고유 식별자 id로 쓸 수 있다.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+어떤 숫자나 문자열도
 
-### Advanced Configuration
+### 73. filter 연습
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```jsx
+정답;
+const Expenses = props => {
+  const [filterYear, setFilterYear] = useState(2022);
 
-### Deployment
+  const filterChanageHandler = changeYear => {
+    setFilterYear(changeYear);
+  };
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+  const filteredExpenses = props.items.filter(
+    prevExpense => prevExpense.date.getFullYear().toString() === filterYear
+  );
 
-### `npm run build` fails to minify
+  return (
+    <div>
+      <Card className="expenses">
+        <ExpensesFilter
+          selected={filterYear}
+          onChangeFilter={filterChanageHandler}
+        />
+        {filteredExpenses.map(expense => (
+          <ExpenseItem
+            key={expense.id}
+            title={expense.title}
+            amount={expense.amount}
+            date={expense.date}
+          />
+        ))}
+      </Card>
+    </div>
+  );
+};
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+export default Expenses;
+```
+
+나는 드롭다운 선택이 바뀌는 함수에서 filter를 적용하고 있고
+
+필터된 항목을 map() 돌리지 않아서 안 바뀌고 있었음
+
+```jsx
+오답..
+const Expenses = props => {
+  const [filterYear, setFilterYear] = useState(2022);
+
+  const filterChanageHandler = changeYear => {
+    setFilterYear(changeYear);
+		props.items.filter(
+    prevExpense => prevExpense.date.getFullYear() === filterYear
+  );
+  };
+
+  return (
+    <div>
+      <Card className="expenses">
+        <ExpensesFilter
+          selected={filterYear}
+          onChangeFilter={filterChanageHandler}
+        />
+        {props.items.map(expense => (
+          <ExpenseItem
+            key={expense.id}
+            title={expense.title}
+            amount={expense.amount}
+            date={expense.date}
+          />
+        ))}
+      </Card>
+    </div>
+  );
+};
+
+export default Expenses;
+```
