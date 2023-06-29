@@ -1,14 +1,10 @@
-# React | React 완벽가이드 with Redux, Next, TypeScript | Section5~6
+# React | React 완벽가이드 with Redux, Next, TypeScript | Section5
 
 **📌유데미 강의**
 
 https://kmooc.udemy.com/course/best-react/learn/lecture/28517031#overview
 
-
-
-
 https://github.com/pajiyeee/react-complete-guide/assets/124162355/ff094b72-358f-42b4-9868-1b359a833fe5
-
 
 ## **Section 5 렌더링 리스트 및 조건부 Content**
 
