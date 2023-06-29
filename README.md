@@ -4,11 +4,7 @@
 
 https://kmooc.udemy.com/course/best-react/learn/lecture/28517031#overview
 
-
-
 https://github.com/pajiyeee/react-complete-guide/assets/124162355/415285e8-4ee4-4c1a-b201-2704ccff2021
-
-
 
 ## **Section 5 렌더링 리스트 및 조건부 Content**
 
@@ -207,3 +203,82 @@ let expenseContents = <p>No data</p>;
 ```
 
 깔끔하게 JSX코드를 쓸 수 있음
+
+### 80. 차트
+
+```jsx
+const chartDataPoints = [
+  { label: 'Jan', value: 0 },
+  { label: 'Feb', value: 0 },
+  { label: 'Mar', value: 0 },
+  { label: 'Apr', value: 0 },
+  { label: 'May', value: 0 },
+  { label: 'Jun', value: 0 },
+  { label: 'Jul', value: 0 },
+  { label: 'Aug', value: 0 },
+  { label: 'Sep', value: 0 },
+  { label: 'Oct', value: 0 },
+  { label: 'Nov', value: 0 },
+  { label: 'Dec', value: 0 },
+];
+```
+
+```jsx
+for (const expense in props.expenses) {
+  const expenseMonth = expense.date.getMonth();
+  chartDataPoints[expenseMonth].value += expense.amount;
+}
+```
+
+이렇게 하면 오류가 뜬다. For문에서 props.expenses가 객체가 아닌 배열이기 때문에 in 이 아닌 of 를 써야 한다.
+
+```jsx
+for (const expense of props.expenses) {
+  const expenseMonth = expense.date.getMonth();
+  chartDataPoints[expenseMonth].value += expense.amount;
+}
+
+return <Chart dataPoints={chartDataPoints} />;
+```
+
+maxValue 값을 구하기 위해 Math.max 를 사용하는데
+
+dataPoints에서 value 값을 모은 배열을 따로 만들어
+
+그 배열을 펼쳐서 그 중에 최댓값이 구해지게 한다.
+
+```jsx
+const dataPointValues = props.dataPoints.map(dataPoint => dataPoint.value);
+const totalMaximumValue = Math.max(...dataPointValues);
+```
+
+```jsx
+{
+  props.dataPoints.map(dataPoint => (
+    <ChartBar
+      key={dataPoint.label}
+      value={dataPoint.value}
+      maxValue={totalMaximumValue}
+      label={dataPoint.label}
+    />
+  ));
+}
+```
+
+차트의 Inner 값이 채워지는 걸 보이게 하기 위해 style 을 적용하는데
+
+먼저 해당 월의 value 를 위에서 구한 최댓값으로 나누고 100 곱하여 % 비율로 나오게 한다.
+
+Math.round() : 반올림한 정수를 구해준다.
+
+```jsx
+let barFillHeight = '0%';
+
+if (props.maxValue > 0) {
+  barFillHeight = Math.round((props.value / props.maxValue) * 100) + '%';
+}
+```
+
+```jsx
+<div className="chart-bar_fill" style={{ height: barFillHeight }} />
+```
