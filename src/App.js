@@ -17,12 +17,14 @@ const DUMMY_EXPENSES = [
     date: new Date(2023, 1, 10),
   },
 ];
+
 const App = () => {
   const [expenses, setExpenses] = useState(DUMMY_EXPENSES);
 
   const addExpenseHandler = expense => {
     setExpenses(prevExpenses => [expense, ...prevExpenses]);
   };
+
   return (
     <div className="App">
       <NewExpense onAddExpense={addExpenseHandler} />
