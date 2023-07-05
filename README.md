@@ -194,3 +194,80 @@ export default ErrorModal;
 React-dom 은 리액트에서 웹브라우저로 가져오기 위해 만든 로직들과 기능을 DOM에서의 작업들과 호환되도록 해주는 라이브러리
 
 →리액트용 어뎁터
+
+### 115. ref
+
+ref는 참조하다
+
+다른 DOM요소에 접근해서 그것들로 작업할 수 있게 해주는 것
+
+특정한 상황(폼 제출)에만 업데이트가 필요한데 사용자의 반응(인풋 입력 등)마다 state를 업데이트하는 건 과함
+
+→ 이럴 때 ref로 해결
+
+useRef훅을 이용한다.
+
+초기화하려는 기본값을 ref
+
+해당 ref와 작업할 수 있게 해주는 값을 반환 → 요소에 연결하여 해당 요소와 작업할 수 있게 해주는 것
+
+기본값인 요소에 ref 속성을 넣어준다.
+
+ref 한 값을 콘솔로그해보면 객체가 나오는데
+
+ref한 값의이름.current.value 하면 요소에 저장한 값이 나온다.
+
+요소에 저장한 값에 접근하는것
+
+→인풋창에 입력한 값을 value 값으로 onchange 했던 코드들과 useState값을 없애서 코드를 줄일 수 있다.
+
+폼을 제출하고 다시 ref한 인풋을 초기화하기 위해선
+
+1. current.value 를 빈값으로 다시 설정해주는 작업
+
+2)state로 관리
+
+ref는 코드가 더 적지만 DOM에 접근
+
+값을 읽기만 할 때면 사용하는게 더 좋을수도
+
+```jsx
+import React, { useRef, useState } from 'react';
+...
+
+const AddUser = props => {
+  const nameInputRef = useRef();
+  const ageInputRef = useRef();
+  const [error, setError] = useState();
+	...
+  const addUserHandler = event => {
+    event.preventDefault();
+    const enterName = nameInputRef.current.value;
+    const enterAge = ageInputRef.current.value;
+		...
+    props.onAddUser(enterName, enterAge);
+    nameInputRef.current.value = '';
+    ageInputRef.current.value = '';
+  };
+	...
+  return (
+      <Card className={classes.input}>
+        <form onSubmit={addUserHandler}>
+          <label htmlFor="username">Username</label>
+          <input id="username" type="text" ref={nameInputRef} />
+          <label htmlFor="age">Age (Years)</label>
+          <input id="age" type="number" ref={ageInputRef} />
+          <Button type="submit">Add User</Button>
+        </form>
+      </Card>
+  );
+};
+
+export default AddUser;
+```
+
+### 116. 제어되는 컴포넌트 & 제어되지 않는 컴포넌트
+
+ref를 사용한 input은 리엑트에 의해 제어되지 않기 때문에 제어되지 않는 컴포넌트로 된다.
+
+ref를 사용하기 전 state는 리엑트에 의해 제어되었기 때문에 제어된 컴포넌트
