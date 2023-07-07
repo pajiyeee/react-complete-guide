@@ -1,5 +1,9 @@
 # React | React 완벽가이드 with Redux, Next, TypeScript | Section27
 
+
+https://github.com/pajiyeee/react-complete-guide/assets/124162355/f7ed2b52-3133-4699-9e45-a8ea9de40353
+
+
 **📌유데미 강의**
 
 https://kmooc.udemy.com/course/best-react/learn/lecture/28517031#overview
