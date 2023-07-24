@@ -246,3 +246,45 @@ useEffect(() => {
 ### 191. Firebase
 
 프로젝트 생성 → realtime database → 주소 복사 → 붙여넣고 /원하는 데이터 관련 이름.json
+
+### 192. POST요청 보내기
+
+fetch 의 디폴트 값은 get
+
+method 를 POST로 지정
+
+```jsx
+async function addMovieHandler(movie) {
+  const response = await fetch('https://.../movies.json', {
+    method: 'POST',
+    body: JSON.stringify(movie),
+    header: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = await response.json();
+}
+```
+
+![스크린샷 2023-07-24 오후 2.19.22.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/26641aae-f431-4d93-a05b-1b4634f21b62/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-07-24_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_2.19.22.png)
+
+앱을 실행하면
+
+map 에 문제 있다고 나오는데 firebase를 쓰면서 중첩객체로 data가 받아와지는
+
+그래서 for.. in 루프를 사용해서 배열에 data키들을 push시킬 수 있다.
+
+```jsx
+const data = await response.json();
+
+const loadedMovies = [];
+for (const key in data) {
+  loadedMovies.push({
+    id: key,
+    title: data[key].title,
+    openingText: data[key].openingText,
+    releaseDate: data[key].releaseDate,
+  });
+}
+setMovies(loadedMovies);
+```
