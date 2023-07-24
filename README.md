@@ -1,5 +1,11 @@
 # React | React 완벽가이드 with Redux, Next, TypeScript | Section14
 
+
+
+https://github.com/pajiyeee/react-complete-guide/assets/124162355/e2722f8d-92d4-47dc-a302-1b205b6a9e3f
+
+
+
 **📌유데미 강의**
 
 https://kmooc.udemy.com/course/best-react/learn/lecture/28517031#overview
@@ -265,8 +271,9 @@ async function addMovieHandler(movie) {
   const data = await response.json();
 }
 ```
+![스크린샷 2023-07-24 오후 2 19 22](https://github.com/pajiyeee/react-complete-guide/assets/124162355/31d4b7aa-5e67-43ef-8967-2bb6a86fcc42)
 
-![스크린샷 2023-07-24 오후 2.19.22.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/26641aae-f431-4d93-a05b-1b4634f21b62/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-07-24_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_2.19.22.png)
+
 
 앱을 실행하면
 
