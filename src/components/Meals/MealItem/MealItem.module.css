@@ -1,0 +1,21 @@
+.meal {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.meal h5 {
+  margin: 0 0 0.25rem 0;
+}
+
+.description {
+  margin-right: 40px;
+  color: #666666;
+}
+
+.price {
+  margin-top: 0.75rem;
+  color: rgb(224, 142, 0);
+}
